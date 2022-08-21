@@ -1,4 +1,6 @@
 ﻿using SoruBankam.Business.Abstract;
+using SoruBankam.Business.Concrete;
+using SoruBankam.DataAccessLayer.Concrete.EntityFramework;
 using SoruBankam.Entities;
 using SoruBankam.Presentation.WindowsForms.Tools;
 
@@ -13,11 +15,13 @@ namespace SoruBankam.Presentation.WindowsForms.Views
         {
             InitializeComponent();
             questions = new List<Question>();
+            questionManager = new QuestionManager(new QuestionRepository());
         }
 
         private void QuestionsForm_Load(object sender, EventArgs e)
         {
             GetAllQuestions();
+            if(questions.Count == 0) { return; }
             currentQuestion = questions.First();
             DisplayQuestion(currentQuestion);
         }
@@ -30,23 +34,27 @@ namespace SoruBankam.Presentation.WindowsForms.Views
                 return;
 
             currentQuestion = questions[indexOf - 1];
+
+            DisplayQuestion(currentQuestion);
         }
 
         private void btnNext_Click(object sender, EventArgs e)
         {
             var indexOf = questions.IndexOf(currentQuestion);
 
-            if (indexOf > questions.Count)
+            if (indexOf >= questions.Count-1)
                 return;
 
             currentQuestion = questions[indexOf + 1];
+
+            DisplayQuestion(currentQuestion);
         }
 
         private void btnSwitch_Click(object sender, EventArgs e)
         {
             if (btnSwitch.Text == "Cevap")
             {
-                DisplayAnswer(currentQuestion.Answer);
+                DisplayAnswer(currentQuestion.AnswerPhoto);
             }
             else
             {
@@ -73,10 +81,17 @@ namespace SoruBankam.Presentation.WindowsForms.Views
 
         }
 
-        private void DisplayAnswer(Answer answer)
+        private void DisplayAnswer(Byte[] answer)
         {
-            pictureSwitch.Image = BitmapTool.ByteToImage(answer.Photo);
+            pictureSwitch.Image = BitmapTool.ByteToImage(answer);
             btnSwitch.Text = "Soru";
+
+        }
+
+        private void btnSoruEkle_Click(object sender, EventArgs e)
+        {
+            AddQuestionForm addQuestionForm = new AddQuestionForm();
+            addQuestionForm.ShowDialog();
 
         }
     }

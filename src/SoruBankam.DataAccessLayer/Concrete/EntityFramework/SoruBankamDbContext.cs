@@ -6,7 +6,6 @@ namespace SoruBankam.DataAccessLayer.Concrete.EntityFramework
     public class SoruBankamDbContext : DbContext
     {
         public DbSet<Question> Questions { get; set; }
-        public DbSet<Answer> Answers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -16,6 +15,19 @@ namespace SoruBankam.DataAccessLayer.Concrete.EntityFramework
             }
 
             base.OnConfiguring(optionsBuilder);
+        }
+
+        public override int SaveChanges()
+        {
+            var entities = ChangeTracker.Entries<BaseEntity>();
+
+            foreach (var entity in entities)
+            {
+                if(entity.State == EntityState.Added)
+                    entity.Entity.Id = Guid.NewGuid();
+            }
+
+            return base.SaveChanges();
         }
     }
 }

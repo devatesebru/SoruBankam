@@ -3,8 +3,8 @@
     public class Question : BaseEntity
     {
         public Byte[] Photo { get; set; }
-        public Answer Answer { get; set; }
+        public Byte[] AnswerPhoto { get; set; }
         public string Description { get; set; }
-        
+
     }
 }

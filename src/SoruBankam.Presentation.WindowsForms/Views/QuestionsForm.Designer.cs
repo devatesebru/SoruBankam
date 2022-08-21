@@ -34,6 +34,7 @@
             this.tbDescription = new System.Windows.Forms.TextBox();
             this.btnSwitch = new System.Windows.Forms.Button();
             this.pictureSwitch = new System.Windows.Forms.PictureBox();
+            this.btnSoruEkle = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureSwitch)).BeginInit();
             this.SuspendLayout();
             // 
@@ -89,15 +90,27 @@
             this.pictureSwitch.Location = new System.Drawing.Point(12, 12);
             this.pictureSwitch.Name = "pictureSwitch";
             this.pictureSwitch.Size = new System.Drawing.Size(398, 276);
+            this.pictureSwitch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureSwitch.TabIndex = 6;
             this.pictureSwitch.TabStop = false;
             this.pictureSwitch.Click += new System.EventHandler(this.pictureSwitch_Click);
+            // 
+            // btnSoruEkle
+            // 
+            this.btnSoruEkle.Location = new System.Drawing.Point(12, 305);
+            this.btnSoruEkle.Name = "btnSoruEkle";
+            this.btnSoruEkle.Size = new System.Drawing.Size(56, 39);
+            this.btnSoruEkle.TabIndex = 12;
+            this.btnSoruEkle.Text = "Soru Ekle";
+            this.btnSoruEkle.UseVisualStyleBackColor = true;
+            this.btnSoruEkle.Click += new System.EventHandler(this.btnSoruEkle_Click);
             // 
             // QuestionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(423, 448);
+            this.Controls.Add(this.btnSoruEkle);
             this.Controls.Add(this.btnNext);
             this.Controls.Add(this.btnPrevious);
             this.Controls.Add(this.label1);
@@ -121,5 +134,6 @@
         private TextBox tbDescription;
         private Button btnSwitch;
         private PictureBox pictureSwitch;
+        private Button btnSoruEkle;
     }
 }
