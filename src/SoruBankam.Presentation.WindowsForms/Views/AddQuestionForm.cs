@@ -17,7 +17,7 @@ namespace SoruBankam.Presentation.WindowsForms.Views
 
         private void AddQuestionForm_Load(object sender, EventArgs e)
         {
-            this.questionManager = new QuestionManager(new QuestionRepository());
+            this.questionManager = Factory.CreateQuestionManager(); 
         }
 
         private void btnQuestionAdd_Click(object sender, EventArgs e)
@@ -48,6 +48,7 @@ namespace SoruBankam.Presentation.WindowsForms.Views
             questionManager.Add(question);
 
             MessageBox.Show("Soru Kaydedildi");
+                     
 
             this.Close();
         }

@@ -7,7 +7,8 @@ namespace SoruBankam.Business.Concrete
 {
     public class QuestionManager : IQuestionManager
     {
-       IQuestionRepository questionRepository;
+        private IQuestionRepository questionRepository;
+        public event Action<Question> questionAdded;
 
         public QuestionManager(IQuestionRepository questionRepository)
         {
@@ -17,6 +18,7 @@ namespace SoruBankam.Business.Concrete
         public void Add(Question entity)
         {
             questionRepository.Add(entity);
+            questionAdded?.Invoke(entity);
         }
 
         public List<Question> GetAll()

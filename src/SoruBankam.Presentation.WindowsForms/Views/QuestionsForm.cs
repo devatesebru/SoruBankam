@@ -15,15 +15,22 @@ namespace SoruBankam.Presentation.WindowsForms.Views
         {
             InitializeComponent();
             questions = new List<Question>();
-            questionManager = new QuestionManager(new QuestionRepository());
+            questionManager = Factory.CreateQuestionManager();
         }
 
         private void QuestionsForm_Load(object sender, EventArgs e)
         {
+            questionManager.questionAdded += QuestionManager_QuestionAdded;
+
             GetAllQuestions();
             if(questions.Count == 0) { return; }
             currentQuestion = questions.First();
             DisplayQuestion(currentQuestion);
+        }
+
+        private void QuestionManager_QuestionAdded(Question question)
+        {
+            questions.Add(question);
         }
 
         private void btnPrevious_Click(object sender, EventArgs e)
