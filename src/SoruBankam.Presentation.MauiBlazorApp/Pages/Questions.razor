@@ -1,0 +1,16 @@
+﻿@page "/questions"
+@using SoruBankam.Presentation.MauiBlazorApp.Tools
+
+<img src="@base64Image" />
+<InputFile OnChange="OnInputFileChange" />
+
+@code {
+    String base64Image = "";
+
+    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        base64Image = await BrowserFileTool.ToBase64(e.File);
+
+        await InvokeAsync(() => StateHasChanged());
+    }
+}
