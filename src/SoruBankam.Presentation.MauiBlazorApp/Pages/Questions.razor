@@ -1,16 +1,55 @@
 ﻿@page "/questions"
-@using SoruBankam.Presentation.MauiBlazorApp.Tools
+@inject IQuestionManager questionManager;
 
-<img src="@base64Image" />
-<InputFile OnChange="OnInputFileChange" />
+<div class="container">
+    @if (!cevapGoster)
+    {
+    <div class="row m-2">
+        <img src="@currentQuestion" />
+    </div>
+    }
+    else{
+        <div class="row m-2">
+            <img src="@currentQuestion" />
+        </div>
+    }
+    
+    <div class="row m-2">
+        <h4>Açıklama</h4>
+        <p>@currentQuestion.Description</p>
+    </div>
+    <div class="row m-2">
+        <div class="col">
+            <button class="btn btn-primary" type="button">Önceki Soru</button>
+        </div>
+        <div class="col">
+            <button class="btn btn-primary" type="button">Sonraki Soru</button>
+        </div>
+        <div class="col">
+            <button class="btn btn-warning" onclick="CevapGoster" type="button">Cevap</button>
+        </div>
+    </div>
+</div>
 
 @code {
-    String base64Image = "";
+    private String base64Image = "";
+    private bool cevapGoster = false;
+
+    private List<Question> questions;
+    private Question currentQuestion = new Question(); //şu anki soru
 
     private async Task OnInputFileChange(InputFileChangeEventArgs e)
     {
         base64Image = await BrowserFileTool.ToBase64(e.File);
 
+        await InvokeAsync(() => StateHasChanged());
+    }
+
+    private async Task CevapGoster()
+    {
+        cevapGoster = !cevapGoster;
+
+        // Kod tarafındaki değişiklikleri ekranda göstermek için kullanılan kod parçasıdır.
         await InvokeAsync(() => StateHasChanged());
     }
 }

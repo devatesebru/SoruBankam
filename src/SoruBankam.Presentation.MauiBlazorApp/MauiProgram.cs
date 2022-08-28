@@ -1,4 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components.WebView.Maui;
+using SoruBankam.Business.Abstract;
+using SoruBankam.Business.Concrete;
+using SoruBankam.DataAccessLayer.Abstract;
+using SoruBankam.DataAccessLayer.Concrete.EntityFramework;
 
 namespace SoruBankam.Presentation.MauiBlazorApp
 {
@@ -18,6 +22,9 @@ namespace SoruBankam.Presentation.MauiBlazorApp
 #if DEBUG
 		builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
+
+            builder.Services.AddSingleton<IQuestionManager, QuestionManager>();
+            builder.Services.AddSingleton<IQuestionRepository, QuestionRepository>();
 
             return builder.Build();
         }

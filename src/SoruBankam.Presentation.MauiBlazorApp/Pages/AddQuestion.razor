@@ -1,7 +1,39 @@
 ﻿@page "/add-question"
 
-<h3> mer haba AddQuestion</h3>
+<div class="container">
+    <div class="row m-2">
+        <div class="row m-2">
+            <img src="@base64Image" />
+        </div>
+        <div class="row m-2">
+            <InputFile OnChange="OnInputFileChange" />
+        </div>
+        <div class="row m-2 ">
+            <img src="@base64Image" />
+        </div>
+        <div class="row m-2">
+            <InputFile OnChange="OnInputFileChange" />
+        </div>
+    </div>
+    
+    <div class="row m-2">
+        <h4>Açıklama</h4>
+        @*<input type="text" @bind-value="aciklama" />*@
+    </div>
+    <div class="row m-2">
+        <div class="col">
+            <button class="btn btn-success" type="button">Kaydet</button>
+        </div>
+    </div>
+</div>
 
 @code {
+    String base64Image = "";
 
+    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        base64Image = await BrowserFileTool.ToBase64(e.File);
+
+        await InvokeAsync(() => StateHasChanged());
+    }
 }
