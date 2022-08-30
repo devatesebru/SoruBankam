@@ -27,6 +27,13 @@
        Soru kayıt edildi. 
     </div>
    }
+   @if(errors!=""){
+
+        <div class="alert alert-warning" role="alert">
+            @errors
+        </div>
+    }
+    
 
     <div class="row m-2">
         <div class="col">
@@ -40,6 +47,8 @@
     String base64ImageAnswer = "";
     String description = "";
     bool saved = false;
+    string errors = "";
+
 
 
     private async Task OnInputFileChangeQuestion(InputFileChangeEventArgs e)
@@ -58,14 +67,25 @@
 
     private async Task Save()
     {
+        saved = false;
+        errors = "";
+
         var question = new Question();
         question.Description = description;
         question.Photo = Base64Tool.ToByteArray(base64ImageQuestion);
         question.AnswerPhoto = Base64Tool.ToByteArray(base64ImageAnswer);
 
-        questionManager.Add(question);
+        if (description == "" || base64ImageQuestion == "" || base64ImageAnswer ==""){
+            errors = "Lütfen girdileri kontrol ediniz!";            
+            return;
+        }
+
+        questionManager.Add(question);        
         saved = true;
-                
+        base64ImageQuestion = "";
+        base64ImageAnswer = "";
+        description = "";
+          
         await InvokeAsync(() => StateHasChanged());
         await Task.CompletedTask;
     }
