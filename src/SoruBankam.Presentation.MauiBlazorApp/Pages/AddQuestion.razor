@@ -1,39 +1,61 @@
 ﻿@page "/add-question"
+@inject IQuestionManager questionManager;
 
 <div class="container">
     <div class="row m-2">
         <div class="row m-2">
-            <img src="@base64Image" />
+            <img style="height: 200px; width: 300px" src="@base64ImageQuestion" />
         </div>
         <div class="row m-2">
-            <InputFile OnChange="OnInputFileChange" />
+            <InputFile OnChange="OnInputFileChangeQuestion" />
         </div>
         <div class="row m-2 ">
-            <img src="@base64Image" />
+            <img style="height: 200px; width: 300px" src="@base64ImageAnswer" />
         </div>
         <div class="row m-2">
-            <InputFile OnChange="OnInputFileChange" />
+            <InputFile OnChange="OnInputFileChangeAnswer" />
         </div>
     </div>
     
     <div class="row m-2">
         <h4>Açıklama</h4>
-        @*<input type="text" @bind-value="aciklama" />*@
+        <input type="text" @bind-value="description" />
     </div>
     <div class="row m-2">
         <div class="col">
-            <button class="btn btn-success" type="button">Kaydet</button>
+            <button class="btn btn-success" type="button" @onclick="Save">Kaydet</button>
         </div>
     </div>
 </div>
 
 @code {
-    String base64Image = "";
+    String base64ImageQuestion = "";
+    String base64ImageAnswer = "";
+    String description = "";
 
-    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    private async Task OnInputFileChangeQuestion(InputFileChangeEventArgs e)
     {
-        base64Image = await BrowserFileTool.ToBase64(e.File);
+        base64ImageQuestion = await BrowserFileTool.ToBase64(e.File);
 
         await InvokeAsync(() => StateHasChanged());
+    }
+
+    private async Task OnInputFileChangeAnswer(InputFileChangeEventArgs e)
+    {
+        base64ImageAnswer = await BrowserFileTool.ToBase64(e.File);
+
+        await InvokeAsync(() => StateHasChanged());
+    }
+
+    private async Task Save()
+    {
+        var question = new Question();
+        question.Description = description;
+        question.Photo = Base64Tool.ToByteArray(base64ImageQuestion);
+        question.AnswerPhoto = Base64Tool.ToByteArray(base64ImageAnswer);
+
+        questionManager.Add(question);
+
+        await Task.CompletedTask;
     }
 }

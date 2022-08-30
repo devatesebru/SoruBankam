@@ -2,7 +2,7 @@
 using SoruBankam.Business.Abstract;
 using SoruBankam.Business.Concrete;
 using SoruBankam.DataAccessLayer.Abstract;
-using SoruBankam.DataAccessLayer.Concrete.EntityFramework;
+using SoruBankam.DataAccessLayer.Concrete.SQLiteNet;
 
 namespace SoruBankam.Presentation.MauiBlazorApp
 {
