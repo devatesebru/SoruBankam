@@ -103,6 +103,8 @@
         if (question == null)
             return;
 
+        cevapGoster = false;
+
         base64ImageQuestion = Base64Tool.ToBase64(question.Photo);
         base64ImageAnswer = Base64Tool.ToBase64(question.AnswerPhoto);
         currentQuestion = question;
