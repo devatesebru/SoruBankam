@@ -3,6 +3,7 @@ using SoruBankam.Business.Abstract;
 using SoruBankam.Business.Concrete;
 using SoruBankam.DataAccessLayer.Abstract;
 using SoruBankam.DataAccessLayer.Concrete.SQLiteNet;
+using MudBlazor.Services;
 
 namespace SoruBankam.Presentation.MauiBlazorApp
 {
@@ -25,6 +26,7 @@ namespace SoruBankam.Presentation.MauiBlazorApp
 
             builder.Services.AddSingleton<IQuestionManager, QuestionManager>();
             builder.Services.AddSingleton<IQuestionRepository, QuestionRepository>();
+            builder.Services.AddMudServices();
 
             return builder.Build();
         }
