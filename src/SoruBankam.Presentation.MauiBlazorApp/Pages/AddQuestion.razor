@@ -1,7 +1,39 @@
 ﻿@page "/add-question"
 @inject IQuestionManager questionManager;
 
-<div class="container">
+<MudPaper>
+    <MudContainer>
+        <MudPaper>
+            <MudGrid>
+                <MudItem xs="12" md="6" lg="6">
+                    <MudItem xs="12">
+                        <MudImage style="max-height: 230px; max-width: 300px;" Src="@base64ImageQuestion" />
+                    </MudItem>
+                    <MudItem xs="12">
+                        <InputFile OnChange="OnInputFileChangeQuestion" />
+                    </MudItem>
+                </MudItem>
+                <MudItem xs="12" md="6" lg="6">
+                    <MudItem xs="12">
+                        <MudImage style="max-height: 200px; max-width: 300px" Src="@base64ImageAnswer" />
+                    </MudItem>
+                    <MudItem xs="12">
+                        <InputFile OnChange="OnInputFileChangeAnswer" />
+                    </MudItem>
+                </MudItem>
+                
+                
+                <MudItem xs="12">
+                    <MudTextField T="string" Label="Açıklama" Variant="Variant.Outlined" @bind-Text="@description" Lines="3" />
+                </MudItem>
+                <MudItem xs="12">
+                    <MudButton OnClick="Save" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Info" Size="Size.Medium">Kaydet</MudButton>
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+    </MudContainer>
+</MudPaper>
+@*<div class="container">
     <div class="row m-2">
         <div class="row m-2">
             <img style="height: 200px; width: 300px" src="@base64ImageQuestion" />
@@ -40,7 +72,7 @@
             <button class="btn btn-success" type="button" @onclick="Save">Kaydet</button>
         </div>
     </div>
-</div>
+</div>*@
 
 @code {
     String base64ImageQuestion = "";
