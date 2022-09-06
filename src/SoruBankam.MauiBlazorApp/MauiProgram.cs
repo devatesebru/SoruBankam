@@ -1,5 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components.WebView.Maui;
-using SoruBankam.MauiBlazorApp.Data;
+using SoruBankam.Business.Abstract;
+using SoruBankam.Business.Concrete;
+using SoruBankam.DataAccessLayer.Abstract;
+using SoruBankam.DataAccessLayer.Concrete.SQLiteNet;
+using MudBlazor.Services;
+using SoruBankam.MauiBlazorApp;
 
 namespace SoruBankam.MauiBlazorApp
 {
@@ -17,10 +22,12 @@ namespace SoruBankam.MauiBlazorApp
 
             builder.Services.AddMauiBlazorWebView();
 #if DEBUG
-		builder.Services.AddBlazorWebViewDeveloperTools();
+            builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
-
-            builder.Services.AddSingleton<WeatherForecastService>();
+            builder.Services.AddMudServices();
+            builder.Services.AddSingleton<IQuestionManager, QuestionManager>();
+            builder.Services.AddSingleton<IQuestionRepository, QuestionRepository>();
+          
 
             return builder.Build();
         }

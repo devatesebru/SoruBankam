@@ -1,16 +1,16 @@
 ﻿using System.Text;
 
-namespace SoruBankam.Presentation.MauiBlazorApp.Tools
+namespace SoruBankam.MauiBlazorApp.Tools
 {
     public static class Base64Tool
     {
-        public static Byte[] ToByteArray(String base64Photo)
+        public static byte[] ToByteArray(string base64Photo)
         {
             byte[] bytes = Encoding.ASCII.GetBytes(base64Photo);
             return bytes;
         }
 
-        public static String ToBase64(Byte[] bytes)
+        public static string ToBase64(byte[] bytes)
         {
             var base64Photo = Encoding.Default.GetString(bytes);
             return base64Photo;

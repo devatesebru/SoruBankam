@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components.Forms;
 
-namespace SoruBankam.Presentation.MauiBlazorApp.Tools
+namespace SoruBankam.MauiBlazorApp.Tools
 {
     public static class BrowserFileTool
     {
-        public async static Task<String> ToBase64(IBrowserFile browserFile)
+        public async static Task<string> ToBase64(IBrowserFile browserFile)
         {
             if (browserFile.Size > 10_000_000)
                 throw new Exception("Image size then 10.000.000 byte!");
