@@ -1,6 +1,7 @@
 ﻿@page "/questions"
 @inject IQuestionManager questionManager;
 
+
 <div class="container">
     @if (!cevapGoster)
     {
@@ -13,10 +14,10 @@
             <img style="max-height: 230px; max-width: 300px;" src="@base64ImageAnswer" />
         </div>
     }
+
     
     <div class="row m-2">
-        <h4>Açıklama</h4>
-        <p>@currentQuestion.Description</p>
+        <AddComponent  IconString="@Icons.Filled.Description" Title1="Açıklama" Title2="@currentQuestion.Description" />
     </div>
     <div class="row m-2">
         <div class="col">

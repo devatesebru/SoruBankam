@@ -11,7 +11,7 @@
                         <MudImage style="max-height: 230px; max-width: 300px;" Src="@base64ImageQuestion" />
                     </MudItem>
                     <MudItem xs="12">
-                        <MudButton OnClick="TakePhotoQuestion">Soru Ekle</MudButton>
+                        <AddComponent OnClickCallback="TakePhotoQuestion" IconString="@Icons.Filled.PhotoCamera" Title1="Soru Ekle" Title2="Fotoğraf Çekilebilir..." />
                     </MudItem>
                 </MudItem>
                 <MudItem xs="12" md="6" lg="6">
@@ -19,7 +19,7 @@
                         <MudImage style="max-height: 230px; max-width: 300px" Src="@base64ImageAnswer" />
                     </MudItem>
                     <MudItem xs="12">
-                        <MudButton OnClick="TakePhotoAnswer">Cevap Ekle</MudButton>
+                        <AddComponent OnClickCallback="TakePhotoAnswer" IconString="@Icons.Filled.PhotoCamera" Title1="Cevap Ekle" Title2="Fotoğraf Çekilebilir..." />
                     </MudItem>
                 </MudItem>
                 
