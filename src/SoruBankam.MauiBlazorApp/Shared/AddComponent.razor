@@ -1,0 +1,22 @@
+﻿<MudCard @onclick="OnClickCallback" Style="background-color:#ffe4b5" Class="m-2">
+    <MudCardHeader>
+        <CardHeaderAvatar>
+            <MudIcon Icon="@IconString" Size="Size.Large"></MudIcon>
+        </CardHeaderAvatar>
+        <CardHeaderContent>
+            <MudText Typo="Typo.body1" Style="color:#a0522d">@Title1</MudText>
+            <MudText Typo="Typo.body2" Style="color:#a0522d; font-style:italic">@Title2</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+</MudCard>
+
+@code {
+    [Parameter]
+    public EventCallback OnClickCallback { get; set; }
+    [Parameter]
+    public string IconString { get; set; }
+    [Parameter]
+    public string Title1 { get; set; }
+    [Parameter]
+    public string Title2 { get; set; }
+}

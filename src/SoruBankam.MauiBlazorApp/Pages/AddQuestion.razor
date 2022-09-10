@@ -1,5 +1,6 @@
 ﻿@page "/add-question"
 @inject IQuestionManager questionManager;
+@inject ISnackbar snackbar;
 
 <MudPaper>
     <MudContainer>
@@ -15,7 +16,7 @@
                 </MudItem>
                 <MudItem xs="12" md="6" lg="6">
                     <MudItem xs="12">
-                        <MudImage style="max-height: 200px; max-width: 300px" Src="@base64ImageAnswer" />
+                        <MudImage style="max-height: 230px; max-width: 300px" Src="@base64ImageAnswer" />
                     </MudItem>
                     <MudItem xs="12">
                         <MudButton OnClick="TakePhotoAnswer">Cevap Ekle</MudButton>
@@ -94,26 +95,38 @@
 
     private async Task Save()
     {
-        saved = false;
-        errors = "";
+        try
+        {
+            saved = false;
 
-        var question = new Question();
-        question.Description = description;
-        question.Photo = Base64Tool.ToByteArray(base64ImageQuestion);
-        question.AnswerPhoto = Base64Tool.ToByteArray(base64ImageAnswer);
 
-        if (description == "" || base64ImageQuestion == "" || base64ImageAnswer ==""){
-            errors = "Lütfen girdileri kontrol ediniz!";            
-            return;
+            var question = new Question();
+            question.Description = description;
+            question.Photo = Base64Tool.ToByteArray(base64ImageQuestion);
+            question.AnswerPhoto = Base64Tool.ToByteArray(base64ImageAnswer);
+
+            if (description == "" || base64ImageQuestion == "" || base64ImageAnswer == "")
+            {
+                //burada herhangi bilgininbiri girilmediyse uyarı verecek
+                snackbar.Add("lütfen girdileri kontrol ediniz", Severity.Warning);
+                return;
+            }
+
+            questionManager.Add(question);
+            saved = true;
+            base64ImageQuestion = "";
+            base64ImageAnswer = "";
+            description = "";
+
+            await InvokeAsync(() => StateHasChanged());
+
+            snackbar.Add("Soru eklendi.", Severity.Success);
+
+            await Task.CompletedTask;
         }
-
-        questionManager.Add(question);        
-        saved = true;
-        base64ImageQuestion = "";
-        base64ImageAnswer = "";
-        description = "";
-          
-        await InvokeAsync(() => StateHasChanged());
-        await Task.CompletedTask;
+        catch (Exception ex)
+        {
+            snackbar.Add(ex.Message, Severity.Error);
+        }
     }
 }
