@@ -13,6 +13,8 @@ namespace SoruBankam.DataAccessLayer.Concrete.SQLiteNet
         {
             database = new SQLiteAsyncConnection(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SoruBankam.db3"));
             database.CreateTableAsync<Question>().Wait();
+            database.CreateTableAsync<Tag>().Wait();
+            database.CreateTableAsync<QuestionTag>().Wait();
         }
 
         public void Add(Question entity)

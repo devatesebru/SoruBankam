@@ -1,10 +1,9 @@
 ﻿using SQLite;
 
-namespace SoruBankam.Entities
+namespace SoruBankam.Entities;
+
+public abstract class BaseEntity
 {
-    public abstract class BaseEntity
-    {
-        [PrimaryKey]
-        public Guid Id { get; set; }
-    }
+    [PrimaryKey]
+    public Guid Id { get; set; }
 }
