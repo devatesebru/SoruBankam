@@ -5,18 +5,8 @@ using System.Linq.Expressions;
 
 namespace SoruBankam.DataAccessLayer.Concrete.SQLiteNet
 {
-    public class QuestionRepository : IQuestionRepository
+    public class QuestionRepository : Repository, IQuestionRepository
     {
-        readonly SQLiteAsyncConnection database;
-
-        public QuestionRepository()
-        {
-            database = new SQLiteAsyncConnection(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SoruBankam.db3"));
-            database.CreateTableAsync<Question>().Wait();
-            database.CreateTableAsync<Tag>().Wait();
-            database.CreateTableAsync<QuestionTag>().Wait();
-        }
-
         public void Add(Question entity)
         {
             entity.Id = Guid.NewGuid();
