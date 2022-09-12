@@ -1,6 +1,8 @@
 ﻿@page "/add-question"
 @inject IQuestionManager questionManager;
 @inject ISnackbar snackbar;
+@inject ITagManager tagManager;
+@using SoruBankam.Entities;
 
 <MudPaper>
     <MudContainer>
@@ -22,8 +24,12 @@
                         <AddComponent OnClickCallback="TakePhotoAnswer" IconString="@Icons.Filled.PhotoCamera" Title1="Cevap Ekle" Title2="Fotoğraf Çekilebilir..." />
                     </MudItem>
                 </MudItem>
-                
-                
+                <MudSelect T="Tag" MultiSelection="true" @bind-SelectedValues="selectedTags">
+                    @foreach (var t in tags)
+                    {
+                        <MudSelectItem T="Tag" Value="@t">@t.Name</MudSelectItem>
+                    }
+                </MudSelect>
                 <MudItem xs="12">
                     <MudTextField T="string" Label="Açıklama" Variant="Variant.Outlined" @bind-Text="@description" Lines="3" />
                 </MudItem>
@@ -41,7 +47,23 @@
     String base64ImageAnswer = "";
     String description = "";
     bool saved = false;
-    string errors = "";
+    List<Tag> tags = new List<Tag>();
+    IEnumerable<Tag> selectedTags = new List<Tag>();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+
+        await GetTags();
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    private string GetMultiSelectionText(List<string> selectedValues)
+    {
+        return $"{selectedValues.Count} feline{(selectedValues.Count > 1 ? "s have" : " has")} been selected";
+    }
 
     private async Task TakePhotoQuestion()
     {
@@ -89,5 +111,11 @@
         {
             snackbar.Add(ex.Message, Severity.Error);
         }
+    }
+
+    private async Task GetTags()
+    {
+        tags = tagManager.GetAll();
+        await InvokeAsync(() => StateHasChanged());
     }
 }
