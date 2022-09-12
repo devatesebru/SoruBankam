@@ -53,11 +53,6 @@
 
         await GetAllQuestions();
 
-        questionManager.questionAdded += question =>
-        {
-            questions.Add(question);
-        };
-
         await base.OnAfterRenderAsync(firstRender);
     }
 

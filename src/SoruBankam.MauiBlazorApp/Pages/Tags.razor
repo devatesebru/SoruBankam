@@ -1,5 +1,36 @@
-﻿<h3>Tags</h3>
+﻿@page "/tags"
+@inject ITagManager tagManager
+
+@if(tags != null)
+{
+    @foreach (var tag in tags)
+    {
+        <AddComponent Title1="@tag.Name" />
+    }
+}
+else
+{
+    <MudText>Etitket bulunamadı!</MudText>
+}
+
+
 
 @code {
+    private List<Tag> tags;
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+
+        await GetTags();
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    private async Task GetTags()
+    {
+        tags = tagManager.GetAll();
+        await InvokeAsync(() => StateHasChanged());
+    }
 }

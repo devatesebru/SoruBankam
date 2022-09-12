@@ -27,7 +27,9 @@ namespace SoruBankam.MauiBlazorApp
             builder.Services.AddMudServices();
             builder.Services.AddSingleton<IQuestionManager, QuestionManager>();
             builder.Services.AddSingleton<IQuestionRepository, QuestionRepository>();
-          
+            builder.Services.AddSingleton<ITagManager, TagManager>();
+            builder.Services.AddSingleton<ITagRepository, TagRepository>();
+
 
             return builder.Build();
         }

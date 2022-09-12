@@ -1,0 +1,26 @@
+﻿@page "/add-tag"
+@inject ITagManager tagManager
+
+<MudPaper>
+    <MudItem>
+        <h3>Yeni Eti</h3>
+    </MudItem>
+    <MudItem>
+        <MudTextField @bind-Value="tagName" Label="Etiket Adı" Variant="Variant.Outlined"></MudTextField>
+    </MudItem>
+    <MudItem>
+        <MudButton OnClick="Save">Kaydet</MudButton>
+    </MudItem>
+</MudPaper>
+
+@code {
+    private string tagName = "";
+
+    private void Save()
+    {
+        tagManager.Add(new Tag
+            {
+                Name = tagName,
+            });
+    }
+}

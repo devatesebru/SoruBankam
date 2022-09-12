@@ -1,7 +1,9 @@
 ﻿<MudCard @onclick="OnClickCallback" Style="background-color:#ffe4b5" Class="m-2">
     <MudCardHeader>
         <CardHeaderAvatar>
-            <MudIcon Icon="@IconString" Size="Size.Large"></MudIcon>
+            @if(!string.IsNullOrEmpty(IconString)){
+                <MudIcon Icon="@IconString" Size="Size.Large"></MudIcon>
+            }
         </CardHeaderAvatar>
         <CardHeaderContent>
             <MudText Typo="Typo.body1" Style="color:#a0522d">@Title1</MudText>
