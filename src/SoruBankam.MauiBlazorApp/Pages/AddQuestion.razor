@@ -24,12 +24,14 @@
                         <AddComponent OnClickCallback="TakePhotoAnswer" IconString="@Icons.Filled.PhotoCamera" Title1="Cevap Ekle" Title2="Fotoğraf Çekilebilir..." />
                     </MudItem>
                 </MudItem>
-                <MudSelect T="Tag" MultiSelection="true" @bind-SelectedValues="selectedTags">
-                    @foreach (var t in tags)
-                    {
-                        <MudSelectItem T="Tag" Value="@t">@t.Name</MudSelectItem>
-                    }
-                </MudSelect>
+                <MudItem>
+                    <MudSelect T="Tag" Placeholder="Etiket Seçiniz" MultiSelection="true" @bind-SelectedValues="@selectedTags" MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))">
+                        @foreach (var t in tags)
+                        {
+                            <MudSelectItem T="Tag" Value="@t">@t.Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
                 <MudItem xs="12">
                     <MudTextField T="string" Label="Açıklama" Variant="Variant.Outlined" @bind-Text="@description" Lines="3" />
                 </MudItem>
@@ -62,7 +64,9 @@
 
     private string GetMultiSelectionText(List<string> selectedValues)
     {
-        return $"{selectedValues.Count} feline{(selectedValues.Count > 1 ? "s have" : " has")} been selected";
+        var selectedTagName = selectedTags.Select(tag => tag.Name).ToList();
+
+        return String.Join(", ", selectedTagName);
     }
 
     private async Task TakePhotoQuestion()
@@ -82,13 +86,17 @@
         {
             saved = false;
 
-
             var question = new Question();
             question.Description = description;
             question.Photo = Base64Tool.ToByteArray(base64ImageQuestion);
             question.AnswerPhoto = Base64Tool.ToByteArray(base64ImageAnswer);
+            question.Tags = selectedTags.ToList();
 
-            if (description == "" || base64ImageQuestion == "" || base64ImageAnswer == "")
+
+            if (description == "" 
+            || base64ImageQuestion == "" 
+            || base64ImageAnswer == ""
+            || question.Tags.Count <= 0)
             {
                 //burada herhangi bilgininbiri girilmediyse uyarı verecek
                 snackbar.Add("lütfen girdileri kontrol ediniz", Severity.Warning);
@@ -116,6 +124,8 @@
     private async Task GetTags()
     {
         tags = tagManager.GetAll();
+        if (tags.Count > 0)
+            ((List<Tag>)selectedTags).Add(tags.First());
         await InvokeAsync(() => StateHasChanged());
     }
 }

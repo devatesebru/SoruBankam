@@ -1,6 +1,7 @@
 ﻿using SoruBankam.DataAccessLayer.Abstract;
 using SoruBankam.Entities;
 using SQLite;
+using SQLiteNetExtensionsAsync.Extensions;
 using System.Linq.Expressions;
 
 namespace SoruBankam.DataAccessLayer.Concrete.SQLiteNet
@@ -10,7 +11,7 @@ namespace SoruBankam.DataAccessLayer.Concrete.SQLiteNet
         public void Add(Question entity)
         {
             entity.Id = Guid.NewGuid();
-            database.InsertAsync(entity);
+            database.InsertWithChildrenAsync(entity);
         }
 
         public void Delete(Question entity)
@@ -25,11 +26,12 @@ namespace SoruBankam.DataAccessLayer.Concrete.SQLiteNet
 
         public List<Question> GetAll(Expression<Func<Question, bool>> filter = null)
         {
-            return database.Table<Question>().ToListAsync().Result;
+            return database.GetAllWithChildrenAsync<Question>().Result;
         }
 
         public void Update(Question entity)
         {
+            //database.UpdateWithChildrenAsync(entity);
             throw new NotImplementedException();
         }
     }
