@@ -1,8 +1,10 @@
-﻿@page "/questions"
+﻿@page "/questions/{tagId:guid}"
 @inject IQuestionManager questionManager;
 
 
 <div class="container">
+    @TagId.ToString()
+
     @if (!cevapGoster)
     {
     <div class="row m-2">
@@ -45,6 +47,9 @@
 
     private List<Question> questions;
     private Question currentQuestion = new Question(); //şu anki soru
+
+    [Parameter]
+    public Guid TagId { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
