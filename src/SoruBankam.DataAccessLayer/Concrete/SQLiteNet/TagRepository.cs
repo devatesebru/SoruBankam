@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using SoruBankam.DataAccessLayer.Abstract;
 using SoruBankam.Entities;
+using SQLiteNetExtensionsAsync.Extensions;
 using System;
 using System.Linq.Expressions;
 
@@ -24,7 +25,7 @@ namespace SoruBankam.DataAccessLayer.Concrete.SQLiteNet
 
         public Tag Get(Expression<Func<Tag, bool>> filter)
         {
-            throw new NotImplementedException();
+            return database.GetWithChildrenAsync<Tag>(database.GetAsync(filter).Result.Id).Result;
         }
 
         public List<Tag> GetAll(Expression<Func<Tag, bool>> filter = null)

@@ -1,10 +1,11 @@
 ﻿@page "/questions/{tagId:guid}"
 @inject IQuestionManager questionManager;
+@inject NavigationManager navigationManager
 
-
+@if(currentQuestion != null){
 <div class="container">
-    @TagId.ToString()
-
+    
+   
     @if (!cevapGoster)
     {
     <div class="row m-2">
@@ -19,7 +20,9 @@
 
     
     <div class="row m-2">
-        <AddComponent  IconString="@Icons.Filled.Description" Title1="Açıklama" Title2="@currentQuestion.Description" />
+        
+            <AddComponent  IconString="@Icons.Filled.Description" Title1="Açıklama" Title2="@currentQuestion.Description" />
+        
     </div>
     <div class="row m-2">
         <div class="col">
@@ -39,7 +42,10 @@
         </div>
     </div>
 </div>
-
+}
+else{
+    <AddComponent OnClickCallback="@(()=> navigationManager.NavigateTo("tags"))" Title1="Soru bulunamadı" />
+}
 @code {
     String base64ImageQuestion = "";
     String base64ImageAnswer = "";
@@ -95,7 +101,7 @@
 
     private async Task GetAllQuestions()
     {
-        questions = questionManager.GetAll();
+        questions = questionManager.GetAllWithTag(TagId);
         await SetCurrentQuestion(questions.FirstOrDefault());
     }
 

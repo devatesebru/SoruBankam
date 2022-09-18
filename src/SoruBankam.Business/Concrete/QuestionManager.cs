@@ -8,11 +8,13 @@ namespace SoruBankam.Business.Concrete
     public class QuestionManager : IQuestionManager
     {
         private IQuestionRepository questionRepository;
+        private ITagRepository tagRepository;
         public event Action<Question> questionAdded;
 
-        public QuestionManager(IQuestionRepository questionRepository)
+        public QuestionManager(IQuestionRepository questionRepository, ITagRepository tagRepository)
         {
            this.questionRepository = questionRepository;
+            this.tagRepository = tagRepository;
         }
 
         public void Add(Question entity)
@@ -29,6 +31,13 @@ namespace SoruBankam.Business.Concrete
         public void Remove(Question entity)
         {
             questionRepository.Delete(entity);
+        }
+
+        public List<Question> GetAllWithTag(Guid tagId)
+        {
+            var tag = tagRepository.Get(x => x.Id == tagId);
+
+            return tag.Questions;
         }
     }
 }
