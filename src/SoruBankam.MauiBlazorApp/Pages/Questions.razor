@@ -2,50 +2,52 @@
 @inject IQuestionManager questionManager;
 @inject NavigationManager navigationManager
 
+<MudPaper>
+    <MudContainer>
 @if(currentQuestion != null){
-<div class="container">
-    
-   
-    @if (!cevapGoster)
-    {
-    <div class="row m-2">
-            <img style="max-height: 230px; max-width: 300px;" src="@base64ImageQuestion" />
-    </div>
-    }
-    else{
-        <div class="row m-2">
-            <img style="max-height: 230px; max-width: 300px;" src="@base64ImageAnswer" />
-        </div>
-    }
+    <MudGrid>
+        @if (!cevapGoster)
+        {
+            <MudItem xs="12">
+                <MudImage style="max-height: 230px; max-width: 300px;" Src="@base64ImageQuestion" />
+            </MudItem>
+        }
+        else{
+            <MudItem xs="12">
+                <MudImage style="max-height: 230px; max-width: 300px;" Src="@base64ImageAnswer" />
+            </MudItem>
+        }
 
-    
-    <div class="row m-2">
-        
+        <MudItem xs="12">
             <AddComponent  IconString="@Icons.Filled.Description" Title1="Açıklama" Title2="@currentQuestion.Description" />
+        </MudItem>
+
+        <MudItem xs="12">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="PreviousQuestion" >Önceki Soru</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="NextQuestion">Sonraki Soru</MudButton>
+        </MudItem>
         
-    </div>
-    <div class="row m-2">
-        <div class="col">
-            <button class="btn btn-primary" @onclick="PreviousQuestion" type="button">Önceki Soru</button>
-        </div>
-        <div class="col">
-            <button class="btn btn-primary" @onclick="NextQuestion" type="button">Sonraki Soru</button>
-        </div>
-        <div class="col">
-            @if(cevapGoster){
-                <button class="btn btn-warning" @onclick="CevapGoster" type="button">Soru</button>
-            }
-            else{
-                <button class="btn btn-warning" @onclick="CevapGoster" type="button">Cevap</button>
-            }
-            
-        </div>
-    </div>
-</div>
+
+        @if(cevapGoster){
+            <MudItem xs="12">
+                <MudButton Variant="Variant.Filled" Color="Color.Warning" FullWidth="true" @onclick="CevapGoster">Soru</MudButton>
+            </MudItem>
+        }
+        else{
+            <MudItem xs="12">
+                <MudButton Variant="Variant.Filled" Color="Color.Warning" FullWidth="true" @onclick="CevapGoster">Cevap</MudButton>
+            </MudItem>
+        }
+
+    </MudGrid>
 }
 else{
-    <AddComponent OnClickCallback="@(()=> navigationManager.NavigateTo("tags"))" Title1="Soru bulunamadı" />
+    <MudItem>
+        <AddComponent OnClickCallback="@(()=> navigationManager.NavigateTo("tags"))" Title1="Soru bulunamadı" />
+    </MudItem>
 }
+</MudContainer>
+</MudPaper>
 @code {
     String base64ImageQuestion = "";
     String base64ImageAnswer = "";
