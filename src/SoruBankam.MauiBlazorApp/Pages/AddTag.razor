@@ -1,15 +1,15 @@
 ﻿@page "/add-tag"
 @inject ITagManager tagManager
 
-<MudPaper>
+<MudPaper Class="pa-4" Style="@($"color:{Colors.Orange.Accent4}; background:{Colors.Orange.Lighten5};")">   
     <MudItem>
-        <h3>Yeni Eti</h3>
+        <MudText Align="Align.Center"><b>Yeni Etiket</b>  </MudText>
     </MudItem>
     <MudItem>
         <MudTextField @bind-Value="tagName" Label="Etiket Adı" Variant="Variant.Outlined"></MudTextField>
     </MudItem>
-    <MudItem>
-        <MudButton OnClick="Save">Kaydet</MudButton>
+    <MudItem>        
+        <MudButton Variant="Variant.Filled" OnClick="Save" Color="Color.Warning" FullWidth="true">Kaydet</MudButton>
     </MudItem>
 </MudPaper>
 
