@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoruBankam.Presentation.Win
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoruBankam.MauiBlazorApp", "src\SoruBankam.MauiBlazorApp\SoruBankam.MauiBlazorApp.csproj", "{4E24D49E-17D8-40CB-A42E-FF6E96135BC4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoruBankam.WebApi", "src\SoruBankam.WebApi\SoruBankam.WebApi.csproj", "{52927F05-069E-4CD5-9399-C1B5BAF2AC99}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{4E24D49E-17D8-40CB-A42E-FF6E96135BC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E24D49E-17D8-40CB-A42E-FF6E96135BC4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4E24D49E-17D8-40CB-A42E-FF6E96135BC4}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{52927F05-069E-4CD5-9399-C1B5BAF2AC99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52927F05-069E-4CD5-9399-C1B5BAF2AC99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52927F05-069E-4CD5-9399-C1B5BAF2AC99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52927F05-069E-4CD5-9399-C1B5BAF2AC99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

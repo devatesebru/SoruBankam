@@ -1,5 +1,6 @@
 ﻿@page "/add-tag"
 @inject ITagManager tagManager
+@inject ISnackbar snackbar;
 
 <MudPaper Class="pa-4" Style="@($"color:{Colors.Orange.Accent4}; background:{Colors.Orange.Lighten5};")">   
     <MudItem>
@@ -14,13 +15,28 @@
 </MudPaper>
 
 @code {
-    private string tagName = "";
-
+    private string tagName;   
+    
     private void Save()
-    {
-        tagManager.Add(new Tag
-            {
-                Name = tagName,
-            });
+    { 
+        try
+        {
+            if(tagName!=null){
+                tagManager.Add(new Tag
+                {
+                    Name = tagName,
+                    
+                });
+                snackbar.Add("Etiket eklendi.", Severity.Success);
+            }
+            else{
+                snackbar.Add("Etiket Adını doldurunuz", Severity.Warning);
+            return;
+            }  
+        }
+        catch (Exception ex)
+        {
+            snackbar.Add(ex.Message, Severity.Error);
+        }            
     }
 }

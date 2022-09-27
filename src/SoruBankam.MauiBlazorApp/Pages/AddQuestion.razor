@@ -4,9 +4,9 @@
 @inject ITagManager tagManager;
 @using SoruBankam.Entities;
 
-<MudPaper>
+<MudPaper >
     <MudContainer>
-        <MudPaper>
+        <MudPaper Class="pa-4" Style="@($"color:{Colors.Orange.Accent4}; background:{Colors.Orange.Lighten5};")">
             <MudGrid>
                 <MudItem xs="12" md="6" lg="6">
                     <MudItem xs="12">
@@ -25,18 +25,20 @@
                     </MudItem>
                 </MudItem>
                 <MudItem>
-                    <MudSelect T="Tag" Placeholder="Etiket Seçiniz" MultiSelection="true" @bind-SelectedValues="@selectedTags" MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))">
+                     <MudPaper Style="@($"color:{Colors.Lime.Accent4}; background:{Colors.Orange.Accent1};")">
+                    <MudSelect T="Tag" Placeholder="Etiket Seçiniz"  AdornmentColor="Color.Warning" MultiSelection="true" @bind-SelectedValues="@selectedTags" MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))">
                         @foreach (var t in tags)
                         {
                             <MudSelectItem T="Tag" Value="@t">@t.Name</MudSelectItem>
                         }
                     </MudSelect>
+                    </MudPaper>
                 </MudItem>
                 <MudItem xs="12">
                     <MudTextField T="string" Label="Açıklama" Variant="Variant.Outlined" @bind-Text="@description" Lines="3" />
                 </MudItem>
                 <MudItem xs="12">
-                    <MudButton OnClick="Save" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Info" Size="Size.Medium">Kaydet</MudButton>
+                    <MudButton OnClick="Save" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Warning" FullWidth="true">Kaydet</MudButton>
                 </MudItem>
             </MudGrid>
         </MudPaper>
