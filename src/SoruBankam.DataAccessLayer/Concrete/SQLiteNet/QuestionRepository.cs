@@ -1,24 +1,17 @@
 ﻿using SoruBankam.DataAccessLayer.Abstract;
 using SoruBankam.Entities;
 using SQLite;
+using SQLiteNetExtensionsAsync.Extensions;
 using System.Linq.Expressions;
 
 namespace SoruBankam.DataAccessLayer.Concrete.SQLiteNet
 {
-    public class QuestionRepository : IQuestionRepository
+    public class QuestionRepository : Repository, IQuestionRepository
     {
-        readonly SQLiteAsyncConnection database;
-
-        public QuestionRepository()
-        {
-            database = new SQLiteAsyncConnection(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SoruBankam.db3"));
-            database.CreateTableAsync<Question>().Wait();
-        }
-
         public void Add(Question entity)
         {
             entity.Id = Guid.NewGuid();
-            database.InsertAsync(entity);
+            database.InsertWithChildrenAsync(entity);
         }
 
         public void Delete(Question entity)
@@ -33,11 +26,12 @@ namespace SoruBankam.DataAccessLayer.Concrete.SQLiteNet
 
         public List<Question> GetAll(Expression<Func<Question, bool>> filter = null)
         {
-            return database.Table<Question>().ToListAsync().Result;
+            return database.GetAllWithChildrenAsync<Question>().Result;
         }
 
         public void Update(Question entity)
         {
+            //database.UpdateWithChildrenAsync(entity);
             throw new NotImplementedException();
         }
     }

@@ -1,0 +1,133 @@
+﻿@page "/add-question"
+@inject IQuestionManager questionManager;
+@inject ISnackbar snackbar;
+@inject ITagManager tagManager;
+@using SoruBankam.Entities;
+
+<MudPaper >
+    <MudContainer>
+        <MudPaper Class="pa-4" Style="@($"color:{Colors.Orange.Accent4}; background:{Colors.Orange.Lighten5};")">
+            <MudGrid>
+                <MudItem xs="12" md="6" lg="6">
+                    <MudItem xs="12">
+                        <MudImage style="max-height: 230px; max-width: 300px;" Src="@base64ImageQuestion" />
+                    </MudItem>
+                    <MudItem xs="12">
+                        <AddComponent OnClickCallback="TakePhotoQuestion" IconString="@Icons.Filled.PhotoCamera" Title1="Soru Ekle" Title2="Fotoğraf Çekilebilir..." />
+                    </MudItem>
+                </MudItem>
+                <MudItem xs="12" md="6" lg="6">
+                    <MudItem xs="12">
+                        <MudImage style="max-height: 230px; max-width: 300px" Src="@base64ImageAnswer" />
+                    </MudItem>
+                    <MudItem xs="12">
+                        <AddComponent OnClickCallback="TakePhotoAnswer" IconString="@Icons.Filled.PhotoCamera" Title1="Cevap Ekle" Title2="Fotoğraf Çekilebilir..." />
+                    </MudItem>
+                </MudItem>
+                <MudItem>
+                     <MudPaper Style="@($"color:{Colors.Lime.Accent4}; background:{Colors.Orange.Accent1};")">
+                    <MudSelect T="Tag" Placeholder="Etiket Seçiniz"  AdornmentColor="Color.Warning" MultiSelection="true" @bind-SelectedValues="@selectedTags" MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))">
+                        @foreach (var t in tags)
+                        {
+                            <MudSelectItem T="Tag" Value="@t">@t.Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField T="string" Label="Açıklama" Variant="Variant.Outlined" @bind-Text="@description" Lines="3" />
+                </MudItem>
+                <MudItem xs="12">
+                    <MudButton OnClick="Save" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Warning" FullWidth="true">Kaydet</MudButton>
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+    </MudContainer>
+</MudPaper>
+
+
+@code {
+    String base64ImageQuestion = "";
+    String base64ImageAnswer = "";
+    String description = "";
+    bool saved = false;
+    List<Tag> tags = new List<Tag>();
+    IEnumerable<Tag> selectedTags = new List<Tag>();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+
+        await GetTags();
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    private string GetMultiSelectionText(List<string> selectedValues)
+    {
+        var selectedTagName = selectedTags.Select(tag => tag.Name).ToList();
+
+        return String.Join(", ", selectedTagName);
+    }
+
+    private async Task TakePhotoQuestion()
+    {
+        base64ImageQuestion = await BrowserFileTool.TakePhotoAndConvertBase64();
+        await InvokeAsync(() => StateHasChanged());
+    }
+    private async Task TakePhotoAnswer()
+    {
+        base64ImageAnswer = await BrowserFileTool.TakePhotoAndConvertBase64();
+        await InvokeAsync(() => StateHasChanged());
+    }
+
+    private async Task Save()
+    {
+        try
+        {
+            saved = false;
+
+            var question = new Question();
+            question.Description = description;
+            question.Photo = Base64Tool.ToByteArray(base64ImageQuestion);
+            question.AnswerPhoto = Base64Tool.ToByteArray(base64ImageAnswer);
+            question.Tags = selectedTags.ToList();
+
+
+            if (description == "" 
+            || base64ImageQuestion == "" 
+            || base64ImageAnswer == ""
+            || question.Tags.Count <= 0)
+            {
+                //burada herhangi bilgininbiri girilmediyse uyarı verecek
+                snackbar.Add("lütfen girdileri kontrol ediniz", Severity.Warning);
+                return;
+            }
+
+            questionManager.Add(question);
+            saved = true;
+            base64ImageQuestion = "";
+            base64ImageAnswer = "";
+            description = "";
+
+            await InvokeAsync(() => StateHasChanged());
+
+            snackbar.Add("Soru eklendi.", Severity.Success);
+
+            await Task.CompletedTask;
+        }
+        catch (Exception ex)
+        {
+            snackbar.Add(ex.Message, Severity.Error);
+        }
+    }
+
+    private async Task GetTags()
+    {
+        tags = tagManager.GetAll();
+        if (tags.Count > 0)
+            ((List<Tag>)selectedTags).Add(tags.First());
+        await InvokeAsync(() => StateHasChanged());
+    }
+}

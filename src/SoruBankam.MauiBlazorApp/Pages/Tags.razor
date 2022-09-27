@@ -1,0 +1,44 @@
+﻿@page "/tags"
+@inject ITagManager tagManager
+@inject NavigationManager navigationManager
+
+@if(tags != null)
+{
+    @foreach (var tag in tags)
+    {
+        <AddComponent Title1="@tag.Name" OnClickCallback="()=> GoQuestions(tag)" />
+    }
+}
+else
+{
+    <MudText>Etitket bulunamadı!</MudText>
+}
+
+
+
+@code {
+    private List<Tag> tags;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+
+        await GetTags();
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    private async Task GetTags()
+    {
+        tags = tagManager.GetAll();
+        await InvokeAsync(() => StateHasChanged());
+    }
+
+    private async Task GoQuestions(Tag tag)
+    {
+        var url = $"questions/{tag.Id}";
+        navigationManager.NavigateTo(url);
+        await Task.CompletedTask;
+    }
+}

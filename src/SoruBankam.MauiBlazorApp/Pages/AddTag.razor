@@ -1,0 +1,42 @@
+﻿@page "/add-tag"
+@inject ITagManager tagManager
+@inject ISnackbar snackbar;
+
+<MudPaper Class="pa-4" Style="@($"color:{Colors.Orange.Accent4}; background:{Colors.Orange.Lighten5};")">   
+    <MudItem>
+        <MudText Align="Align.Center"><b>Yeni Etiket</b>  </MudText>
+    </MudItem>
+    <MudItem>
+        <MudTextField @bind-Value="tagName" Label="Etiket Adı" Variant="Variant.Outlined"></MudTextField>
+    </MudItem>
+    <MudItem>        
+        <MudButton Variant="Variant.Filled" OnClick="Save" Color="Color.Warning" FullWidth="true">Kaydet</MudButton>
+    </MudItem>
+</MudPaper>
+
+@code {
+    private string tagName;   
+    
+    private void Save()
+    { 
+        try
+        {
+            if(tagName!=null){
+                tagManager.Add(new Tag
+                {
+                    Name = tagName,
+                    
+                });
+                snackbar.Add("Etiket eklendi.", Severity.Success);
+            }
+            else{
+                snackbar.Add("Etiket Adını doldurunuz", Severity.Warning);
+            return;
+            }  
+        }
+        catch (Exception ex)
+        {
+            snackbar.Add(ex.Message, Severity.Error);
+        }            
+    }
+}

@@ -1,0 +1,123 @@
+﻿@page "/questions/{tagId:guid}"
+@inject IQuestionManager questionManager;
+@inject NavigationManager navigationManager
+
+<MudPaper>
+    <MudContainer>
+@if(currentQuestion != null){
+    <MudGrid>
+        @if (!cevapGoster)
+        {
+            <MudItem xs="12">
+                <MudImage style="max-height: 230px; max-width: 300px;" Src="@base64ImageQuestion" />
+            </MudItem>
+        }
+        else{
+            <MudItem xs="12">
+                <MudImage style="max-height: 230px; max-width: 300px;" Src="@base64ImageAnswer" />
+            </MudItem>
+        }
+
+        <MudItem xs="12">
+            <AddComponent  IconString="@Icons.Filled.Description" Title1="Açıklama" Title2="@currentQuestion.Description" />
+        </MudItem>
+
+        <MudItem xs="12">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="PreviousQuestion" >Önceki Soru</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" @onclick="NextQuestion">Sonraki Soru</MudButton>
+        </MudItem>
+        
+
+        @if(cevapGoster){
+            <MudItem xs="12">
+                <MudButton Variant="Variant.Filled" Color="Color.Warning" FullWidth="true" @onclick="CevapGoster">Soru</MudButton>
+            </MudItem>
+        }
+        else{
+            <MudItem xs="12">
+                <MudButton Variant="Variant.Filled" Color="Color.Warning" FullWidth="true" @onclick="CevapGoster">Cevap</MudButton>
+            </MudItem>
+        }
+
+    </MudGrid>
+}
+else{
+    <MudItem>
+        <AddComponent OnClickCallback="@(()=> navigationManager.NavigateTo("tags"))" Title1="Soru bulunamadı" />
+    </MudItem>
+}
+</MudContainer>
+</MudPaper>
+@code {
+    String base64ImageQuestion = "";
+    String base64ImageAnswer = "";
+    private bool cevapGoster = false;
+
+    private List<Question> questions;
+    private Question currentQuestion = new Question(); //şu anki soru
+
+    [Parameter]
+    public Guid TagId { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+
+        await GetAllQuestions();
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    private async Task CevapGoster()
+    {
+        cevapGoster = !cevapGoster;
+
+        // Kod tarafındaki değişiklikleri ekranda göstermek için kullanılan kod parçasıdır.
+        await InvokeAsync(() => StateHasChanged());
+    }
+
+    private async Task PreviousQuestion()
+    {
+        var indexOf = questions.IndexOf(currentQuestion);
+
+        if (indexOf == 0)
+            return;
+
+        await SetCurrentQuestion(questions[indexOf - 1]);
+
+        await InvokeAsync(() => StateHasChanged());
+    }
+
+    private async Task NextQuestion()
+    {
+        var indexOf = questions.IndexOf(currentQuestion);
+
+        if (indexOf >= questions.Count - 1)
+            return;
+
+        await SetCurrentQuestion(questions[indexOf + 1]);
+
+        await InvokeAsync(() => StateHasChanged());
+    }
+
+    private async Task GetAllQuestions()
+    {
+        questions = questionManager.GetAllWithTag(TagId);
+        await SetCurrentQuestion(questions.FirstOrDefault());
+    }
+
+    private async Task SetCurrentQuestion(Question question)
+    {
+        if (question == null)
+            return;
+
+        cevapGoster = false;
+
+        base64ImageQuestion = Base64Tool.ToBase64(question.Photo);
+        base64ImageAnswer = Base64Tool.ToBase64(question.AnswerPhoto);
+        currentQuestion = question;
+
+        await InvokeAsync(() => StateHasChanged());
+    }
+}
