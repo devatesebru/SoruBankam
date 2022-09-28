@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace SoruBankam.MauiBlazorApp.Tools
+namespace SoruBankam.WebCommons.Tools
 {
     public static class Base64Tool
     {

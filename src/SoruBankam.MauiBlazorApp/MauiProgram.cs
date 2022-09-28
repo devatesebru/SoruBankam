@@ -5,6 +5,8 @@ using SoruBankam.DataAccessLayer.Abstract;
 using SoruBankam.DataAccessLayer.Concrete.SQLiteNet;
 using MudBlazor.Services;
 using SoruBankam.MauiBlazorApp;
+using SoruBankam.WebCommons.Tools;
+using SoruBankam.MauiBlazorApp.Tools;
 
 namespace SoruBankam.MauiBlazorApp
 {
@@ -29,6 +31,7 @@ namespace SoruBankam.MauiBlazorApp
             builder.Services.AddSingleton<IQuestionRepository, QuestionRepository>();
             builder.Services.AddSingleton<ITagManager, TagManager>();
             builder.Services.AddSingleton<ITagRepository, TagRepository>();
+            builder.Services.AddSingleton<IBrowserFileTool, BrowserFileTool>();
 
 
             return builder.Build();
