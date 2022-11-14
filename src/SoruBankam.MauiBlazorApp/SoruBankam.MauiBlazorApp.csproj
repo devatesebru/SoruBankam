@@ -54,7 +54,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SoruBankam.Business\SoruBankam.Business.csproj" />
+      <ProjectReference Include="..\SoruBankam.WebCommons\SoruBankam.WebCommons.csproj" />
     </ItemGroup>
 
 </Project>

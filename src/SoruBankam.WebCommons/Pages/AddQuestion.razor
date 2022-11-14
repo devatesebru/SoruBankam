@@ -2,7 +2,8 @@
 @inject IQuestionManager questionManager;
 @inject ISnackbar snackbar;
 @inject ITagManager tagManager;
-@using SoruBankam.Entities;
+@inject IBrowserFileTool browserFileTool;
+
 
 <MudPaper >
     <MudContainer>
@@ -73,12 +74,12 @@
 
     private async Task TakePhotoQuestion()
     {
-        base64ImageQuestion = await BrowserFileTool.TakePhotoAndConvertBase64();
+        base64ImageQuestion = await browserFileTool.TakePhotoAndConvertBase64();
         await InvokeAsync(() => StateHasChanged());
     }
     private async Task TakePhotoAnswer()
     {
-        base64ImageAnswer = await BrowserFileTool.TakePhotoAndConvertBase64();
+        base64ImageAnswer = await browserFileTool.TakePhotoAndConvertBase64();
         await InvokeAsync(() => StateHasChanged());
     }
 

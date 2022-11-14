@@ -13,7 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoruBankam.Presentation.Win
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoruBankam.MauiBlazorApp", "src\SoruBankam.MauiBlazorApp\SoruBankam.MauiBlazorApp.csproj", "{4E24D49E-17D8-40CB-A42E-FF6E96135BC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoruBankam.WebApi", "src\SoruBankam.WebApi\SoruBankam.WebApi.csproj", "{52927F05-069E-4CD5-9399-C1B5BAF2AC99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoruBankam.WebApi", "src\SoruBankam.WebApi\SoruBankam.WebApi.csproj", "{52927F05-069E-4CD5-9399-C1B5BAF2AC99}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoruBankam.WebCommons", "src\SoruBankam.WebCommons\SoruBankam.WebCommons.csproj", "{E8A46D90-29AE-4CA2-A831-D1A61EE53C71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoruBankam.BlazorWebAssembly", "src\SoruBankam.BlazorWebAssembly\SoruBankam.BlazorWebAssembly.csproj", "{1D50C900-F21A-464B-9975-6AAD0967E54C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +51,14 @@ Global
 		{52927F05-069E-4CD5-9399-C1B5BAF2AC99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52927F05-069E-4CD5-9399-C1B5BAF2AC99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52927F05-069E-4CD5-9399-C1B5BAF2AC99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8A46D90-29AE-4CA2-A831-D1A61EE53C71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8A46D90-29AE-4CA2-A831-D1A61EE53C71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8A46D90-29AE-4CA2-A831-D1A61EE53C71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8A46D90-29AE-4CA2-A831-D1A61EE53C71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D50C900-F21A-464B-9975-6AAD0967E54C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D50C900-F21A-464B-9975-6AAD0967E54C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D50C900-F21A-464B-9975-6AAD0967E54C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D50C900-F21A-464B-9975-6AAD0967E54C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
