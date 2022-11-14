@@ -1,8 +1,10 @@
-﻿using System.Linq.Expressions;
+﻿using SoruBankam.Entities;
+using System.Linq.Expressions;
 
 namespace SoruBankam.DataAccessLayer.Abstract
 {
     public interface IRepository<TEntity>
+        where TEntity : BaseEntity, new()
     {
         public void Add(TEntity entity);
         public void Delete(TEntity entity);

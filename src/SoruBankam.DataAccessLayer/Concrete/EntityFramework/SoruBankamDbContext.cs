@@ -6,6 +6,7 @@ namespace SoruBankam.DataAccessLayer.Concrete.EntityFramework
     public class SoruBankamDbContext : DbContext
     {
         public DbSet<Question> Questions { get; set; }
+        public DbSet<Tag> Tags { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
